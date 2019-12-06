@@ -31,16 +31,24 @@
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/textViewTimeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Time:"
+            android:textSize="@dimen/ScoreTextSize"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/textViewTime"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/textViewScore"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="0:0"
+            android:gravity="center"
+            android:textSize="@dimen/ScoreTextSize"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

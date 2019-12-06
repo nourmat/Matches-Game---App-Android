@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +19,9 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
     private Button btnBack, btnReset;
     private TextView textViewScore, textViewTime;
     static FragmentManager fragmentManager;
+    private int timeMin, timeSec;
+    private Thread threadTimer; //used to run timer in background
+    private boolean timerOn = false; //used to control timer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,7 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                stopTimer();
                 finish();
             }
         });
@@ -51,7 +58,7 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
     }
 
     public void initGameFragment(Bundle savedInstanceState){
-
+        stopTimer();
         removeExistingFragment();
 
         //prepare fragment objects
@@ -68,6 +75,7 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
                     Game_First_level firstLevel = new Game_First_level();
                     fragmentTransaction.add(R.id.fragment_container, firstLevel);
                     fragmentTransaction.commit();
+                    startTimer();
                 }
                 break;
         }
@@ -85,15 +93,46 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
             fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.fragment_container)).commit();
     }
 
+    @SuppressLint("StaticFieldLeak")
     public void startTimer(){
+        timeMin = 0;
+        timeSec = 0;
+        timerOn = true;
 
+        threadTimer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (timerOn) {
+                    try { Thread.sleep(1000);}catch (Exception e){}
+                    timeSec++;
+                    if (timeSec == 60) {
+                        timeSec = 0;
+                        timeMin++;
+                    }
+                    Log.d("tag", timeMin + ":" + timeSec);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textViewTime.setText(timeMin+":"+timeSec);
+                        }
+                    });
+                }
+                textViewTime.setText("0:0");//after stopping the timer reset
+            }
+        });
+        threadTimer.start();
     }
-    public void stopTimer(){
 
+    public void stopTimer(){
+        timerOn = false;
+        timeMin = 0;
+        timeSec = 0;
     }
 
     public void showScore(){
-        int score = 56789;
+        int score = 1000-(timeMin * 100 + timeSec * 10);
+        score = score > 0 ? score : 0;
+
         Bundle bundle = new Bundle();
         bundle.putInt(ScoreFragment.SCOREMESAGE,score);
         ScoreFragment scoreFragment = new ScoreFragment();
@@ -112,7 +151,7 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
     public void onDataPass(int value) {
         removeExistingFragment(); //stop music and remove fragment
         showScore(); //calc score and open new fragment with score
-
+        stopTimer();
     }
 
     @Override
