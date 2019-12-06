@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Matches</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Main Activity -->
+    <string name="First_Option">Start Game</string>
+    <string name="Second_Option">Select Level</string>
+    <string name="Third_Option">Credits</string>
+    <string name="Fourth_Option">Exit</string>
+
+    <!-- Game Activity -->
+    <string name="RESET">Reset</string>
+    <string name="BACK">Back</string>
+</resources>
