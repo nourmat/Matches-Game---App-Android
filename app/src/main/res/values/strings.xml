@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Matches</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
     <!-- Main Activity -->
     <string name="First_Option">Start Game</string>
@@ -12,4 +11,7 @@
     <!-- Game Activity -->
     <string name="RESET">Reset</string>
     <string name="BACK">Back</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -12,8 +12,8 @@ import androidx.appcompat.widget.AppCompatImageButton;
 public class Card extends AppCompatImageButton{
 
     private static final int backCard = R.drawable.backcard;
-    private static MediaPlayer mediaPlayer;
-
+    static MediaPlayer mediaPlayer;
+    public static final int DELAYTIME = 500;
     private int sound;
     private int image;
 
@@ -62,12 +62,16 @@ public class Card extends AppCompatImageButton{
         mediaPlayer.start();
     }
 
+    public boolean isImageShown(){
+        return (this.getVisibility() == VISIBLE);
+    }
+
     public void delayHide(){
         @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(DELAYTIME);
                 } catch (InterruptedException e) {
                     Log.d("tag", "Caught :" + e);
                 }
@@ -89,7 +93,7 @@ public class Card extends AppCompatImageButton{
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(DELAYTIME);
                 } catch (InterruptedException e) {
                     Log.d("tag", "Caught :" + e);
                 }
@@ -112,7 +116,7 @@ public class Card extends AppCompatImageButton{
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(DELAYTIME);
                 } catch (InterruptedException e) {
                     Log.d("tag", "Caught :" + e);
                 }

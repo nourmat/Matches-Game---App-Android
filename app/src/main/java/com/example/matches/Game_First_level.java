@@ -2,6 +2,7 @@ package com.example.matches;
 
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +12,12 @@ import java.util.Random;
 
 public class Game_First_level extends Fragment {
 
+    private static final int NUMBER_OF_CARDS = 8; //No of cards in this level
+
     private Card card1,card2,card3,card4,card5,card6,card7,card8; //used to be binded with the frontend
-
-    private Card selected1, selected2; //used to store last pressed Cards to check
-    private int shownCardCount = 0;
+    public Card selected1, selected2; //used to store last pressed Cards to check
+    private int shownCardCount = 0; //used to track which state are you in
     private int countDisappearedCards = 0; //used to know if the game is finished
-    private static final int NUMBER_OF_CARDS = 8;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_game__first_level, container, false);
-
-        inti(view);
-        initCards();
-
-        // Inflate the layout for this fragment
-        return view;
-    }
 
     private void inti(View view){
         card1 = view.findViewById(R.id.card1);
@@ -111,7 +102,7 @@ public class Game_First_level extends Fragment {
                     shownCardCount++;
                 }
                 else if (shownCardCount == 1){//check second click
-                    if (selected1 == pressedCard) //check to see if pressed the same Card
+                    if (selected1 == pressedCard) //check to see if same card is pressed
                         return;
 
                     pressedCard.showImage();
@@ -132,10 +123,14 @@ public class Game_First_level extends Fragment {
         return listener;
     }
 
-    //TODO send score result
     void finishedGame(){
-
+        try {
+            Thread.sleep(Card.DELAYTIME+100); //delay to wait until all images are disappeared
+        }catch (Exception e){}
+        OnDataPass dataPasser= (OnDataPass) getActivity();
+        dataPasser.onDataPass(1);
     }
+
     /**---------------------------Fragment Settings-----------------------------------**/
 
     public Game_First_level() {
@@ -143,6 +138,17 @@ public class Game_First_level extends Fragment {
     }
 
     private OnFragmentInteractionListener mListener;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_game__first_level, container, false);
+
+        inti(view);
+        initCards();
+
+        // Inflate the layout for this fragment
+        return view;
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -155,7 +161,6 @@ public class Game_First_level extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
