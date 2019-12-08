@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public View.OnClickListener makeListener(){
         View.OnClickListener textViewListener = new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
@@ -43,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.second_option:
                         break;
                     case R.id.third_option:
+                        Intent intent3 = new Intent(getApplicationContext(),CreditActivity.class);
+                        startActivity(intent3);
                         break;
                     case R.id.fourth_option:
+                        finish();
                         break;
                 }
             }

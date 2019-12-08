@@ -92,8 +92,8 @@ public class Game_First_level extends Fragment {
                 Card pressedCard = (Card)view;
 
                 if (shownCardCount == 0) { //check first click
-                    if (selected1 != null) selected1.hideImage();
-                    if (selected2 != null) selected2.hideImage();
+                    if (selected1 != null && selected1.isImageShown()) selected1.stopThread();
+                    if (selected2 != null && selected2.isImageShown()) selected2.stopThread();
 
                     pressedCard.showImage();
                     pressedCard.playSound();
@@ -111,12 +111,16 @@ public class Game_First_level extends Fragment {
 
                     shownCardCount = 0;
                     if(selected1.equals(selected2)) {//matches
-                        selected1.delayDisappear(selected2);
+                        selected1.delayDisappear();
+                        selected2.delayDisappear();
+                        selected1 = selected2 =  null;
                         countDisappearedCards += 2;
                         if (countDisappearedCards == NUMBER_OF_CARDS) finishedGame(); //if all cards are disappeared then game is finished
                     }
-                    else
-                        selected1.delayHide(selected2);
+                    else {
+                        selected1.delayHide();
+                        selected2.delayHide();
+                    }
                 }
             }
         };

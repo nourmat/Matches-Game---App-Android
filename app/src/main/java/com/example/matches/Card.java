@@ -3,17 +3,17 @@ package com.example.matches;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
-
 import androidx.appcompat.widget.AppCompatImageButton;
 
 public class Card extends AppCompatImageButton{
 
     private static final int backCard = R.drawable.backcard;
-    static MediaPlayer mediaPlayer;
     public static final int DELAYTIME = 500;
+    static MediaPlayer mediaPlayer;
+    private Handler handler;
+    private Runnable runnable;
     private int sound;
     private int image;
 
@@ -66,72 +66,33 @@ public class Card extends AppCompatImageButton{
         return (this.getVisibility() == VISIBLE);
     }
 
+    @SuppressLint("StaticFieldLeak")
     public void delayHide(){
-        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
-                    Thread.sleep(DELAYTIME);
-                } catch (InterruptedException e) {
-                    Log.d("tag", "Caught :" + e);
-                }
-                return null;
-            }
 
+        handler = new Handler();
+        runnable = new Runnable() {
             @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
+            public void run() {
                 hideImage();
             }
         };
-
-        asyncTask.execute();
+        handler.postDelayed(runnable,DELAYTIME);
     }
-
-    public void delayHide(final Card secondCard){
-        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
+    @SuppressLint("StaticFieldLeak")
+    public void delayDisappear(){
+        Handler handler2 = new Handler();
+        Runnable runnable2 = new Runnable() {
             @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
-                    Thread.sleep(DELAYTIME);
-                } catch (InterruptedException e) {
-                    Log.d("tag", "Caught :" + e);
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                hideImage();
-                secondCard.hideImage();
-            }
-        };
-
-        asyncTask.execute();
-    }
-
-    public void delayDisappear(final Card secondCard){
-        @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
-                    Thread.sleep(DELAYTIME);
-                } catch (InterruptedException e) {
-                    Log.d("tag", "Caught :" + e);
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
+            public void run() {
                 disappearImage();
-                secondCard.disappearImage();
             }
         };
+        handler2.postDelayed(runnable2,DELAYTIME - 200);
+    }
 
-        asyncTask.execute();
+    public void stopThread(){
+        handler.removeCallbacks(runnable);
+        this.hideImage();
     }
 
     @Override
