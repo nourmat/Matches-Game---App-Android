@@ -57,6 +57,7 @@ public class Game_Fourth_level extends Fragment {
         card6.setOnClickListener(listener);
         card7.setOnClickListener(listener);
         card8.setOnClickListener(listener);
+        card9.setOnClickListener(listener);
         card10.setOnClickListener(listener);
         card11.setOnClickListener(listener);
         card12.setOnClickListener(listener);

@@ -6,6 +6,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.matches.MainActivity;
@@ -14,7 +15,7 @@ import com.example.matches.R;
 public class SelectLevelActivity extends AppCompatActivity {
 
     private TextView textViewFirstOption, textViewSecondOption, textViewThirdOption, textViewFourthOption;
-
+    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,15 @@ public class SelectLevelActivity extends AppCompatActivity {
         textViewSecondOption.setOnClickListener(textViewListener);
         textViewThirdOption.setOnClickListener(textViewListener);
         textViewFourthOption.setOnClickListener(textViewListener);
+
+        btnBack = findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public View.OnClickListener makeListener(){
