@@ -133,6 +133,7 @@ public class Game_First_level extends Fragment {
         }catch (Exception e){}
         OnDataPass dataPasser= (OnDataPass) getActivity();
         dataPasser.onDataPass(1);
+        this.onDestroy();
     }
 
     /**---------------------------Fragment Settings-----------------------------------**/

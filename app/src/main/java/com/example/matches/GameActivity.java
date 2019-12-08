@@ -69,7 +69,7 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
         switch (level) {
             case 1:
                 if (findViewById(R.id.fragment_container) != null) {
-                    if (savedInstanceState != null) return;
+//                    if (savedInstanceState != null) return;
                     Game_First_level firstLevel = new Game_First_level();
                     fragmentTransaction.replace(R.id.fragment_container, firstLevel);
                     fragmentTransaction.commit();

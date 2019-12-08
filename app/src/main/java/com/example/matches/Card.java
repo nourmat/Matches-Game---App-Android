@@ -57,7 +57,7 @@ public class Card extends AppCompatImageButton{
 
     public void playSound(){
         if (mediaPlayer != null)
-            mediaPlayer.stop();
+            mediaPlayer.release();
         mediaPlayer = MediaPlayer.create(getContext(), sound);
         mediaPlayer.start();
     }
