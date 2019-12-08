@@ -9,12 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectLevelActivity"></activity>
+        <activity android:name=".MenuOptions.SelectLevelActivity"
+            android:screenOrientation="landscape"></activity>
         <activity
-            android:name=".CreditActivity"
+            android:name=".MenuOptions.CreditActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".GameActivity"
+            android:name=".MenuOptions.GameActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"

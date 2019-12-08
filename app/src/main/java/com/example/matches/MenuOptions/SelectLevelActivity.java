@@ -1,26 +1,25 @@
-package com.example.matches;
+package com.example.matches.MenuOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.matches.MenuOptions.CreditActivity;
-import com.example.matches.MenuOptions.GameActivity;
-import com.example.matches.MenuOptions.SelectLevelActivity;
+import com.example.matches.MainActivity;
+import com.example.matches.R;
 
-public class MainActivity extends AppCompatActivity {
+public class SelectLevelActivity extends AppCompatActivity {
 
-    public final static String LEVEL_MESSAGE = "LEVEL";
-    public final static String ISCONTINUE_MESSAGE = "CONT";
     private TextView textViewFirstOption, textViewSecondOption, textViewThirdOption, textViewFourthOption;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_select_level);
 
         textViewFirstOption = findViewById(R.id.first_option);
         textViewSecondOption = findViewById(R.id.second_option);
@@ -40,27 +39,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
+                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                switch (view.getId()) {
                     case R.id.first_option:
-                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                        intent.putExtra(ISCONTINUE_MESSAGE, true);
-                        intent.putExtra(LEVEL_MESSAGE, 1);
-                        startActivity(intent);
+                        intent.putExtra(MainActivity.LEVEL_MESSAGE, 1);
                         break;
                     case R.id.second_option:
-                        Intent intent2 = new Intent(getApplicationContext(), SelectLevelActivity.class);
-                        startActivity(intent2);
+                        intent.putExtra(MainActivity.LEVEL_MESSAGE, 2);
                         break;
                     case R.id.third_option:
-                        Intent intent3 = new Intent(getApplicationContext(), CreditActivity.class);
-                        startActivity(intent3);
+                        intent.putExtra(MainActivity.LEVEL_MESSAGE, 3);
                         break;
                     case R.id.fourth_option:
-                        finish();
+                        intent.putExtra(MainActivity.LEVEL_MESSAGE, 4);
                         break;
                 }
+                intent.putExtra(MainActivity.ISCONTINUE_MESSAGE, false);
+                startActivity(intent);
             }
         };
         return textViewListener;
     }
+
 }

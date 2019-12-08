@@ -9,11 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.matches.Objects.OnDataPass;
 
 public class ScoreFragment extends Fragment {
 
     TextView textViewScore;
+    Button btnOk;
     public static final String SCOREMESAGE = "scoremessage";
 
     @Override
@@ -23,9 +27,24 @@ public class ScoreFragment extends Fragment {
         int score = getArguments().getInt(SCOREMESAGE);
 
         textViewScore = view.findViewById(R.id.textViewScore);
+        btnOk = view.findViewById(R.id.btnOk);
+
         textViewScore.setText("Your Score is " + score);
 
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         return view;
+    }
+
+    private void finish(){
+        OnDataPass dataPasser= (OnDataPass) getActivity();
+        dataPasser.onDataPass2(true);
+        this.onDestroy();
     }
 
     /**-------------------------------------------------**/

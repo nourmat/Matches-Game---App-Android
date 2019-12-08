@@ -1,4 +1,4 @@
-package com.example.matches;
+package com.example.matches.Objects;
 
 public class CardData {
 

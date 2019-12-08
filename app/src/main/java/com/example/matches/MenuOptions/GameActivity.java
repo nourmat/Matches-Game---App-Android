@@ -1,4 +1,4 @@
-package com.example.matches;
+package com.example.matches.MenuOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,33 +8,46 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class GameActivity extends AppCompatActivity implements Game_First_level.OnFragmentInteractionListener,ScoreFragment.OnFragmentInteractionListener, OnDataPass {
+import com.example.matches.Levels.Game_First_level;
+import com.example.matches.Levels.Game_Fourth_level;
+import com.example.matches.Levels.Game_Second_level;
+import com.example.matches.Levels.Game_Third_level;
+import com.example.matches.MainActivity;
+import com.example.matches.Objects.Card;
+import com.example.matches.Objects.OnDataPass;
+import com.example.matches.R;
+import com.example.matches.ScoreFragment;
+
+public class GameActivity extends AppCompatActivity implements Game_First_level.OnFragmentInteractionListener, ScoreFragment.OnFragmentInteractionListener, OnDataPass {
+
+    private static final int LEVEL_NUMBER = 4;
 
     private Button btnBack, btnReset;
     private TextView textViewTime;
     private int timeMin, timeSec;
     private Thread threadTimer; //used to run timer in background
     private boolean timerOn = false; //used to control timer
+    private int currentLevel;
+    private boolean isContinueLevels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        init(savedInstanceState);
-        initGameFragment(savedInstanceState);
+        Intent intent = getIntent();
+        currentLevel = intent.getIntExtra(MainActivity.LEVEL_MESSAGE,1);
+        isContinueLevels = intent.getBooleanExtra(MainActivity.ISCONTINUE_MESSAGE, false);
+
+       initLevel(currentLevel);
     }
 
-    public void init(Bundle savedInstanceState){
-
-        final Bundle tempSavedInstanceState = savedInstanceState; //used for passing
+    public void init(final int level){
 
         btnBack = findViewById(R.id.btnBack);
         btnReset = findViewById(R.id.btnReset);
@@ -51,27 +64,52 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initGameFragment(tempSavedInstanceState);
+                initGameFragment(level);
             }
         });
     }
 
-    public void initGameFragment(Bundle savedInstanceState){
+    public void initLevel (int level){
+        init(level);
+        initGameFragment(level);
+    }
+
+    public void initGameFragment(int level){
         stopTimer();
         removeExistingFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        Intent intent = getIntent();
-        int level = intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0);
-
         switch (level) {
             case 1:
                 if (findViewById(R.id.fragment_container) != null) {
-//                    if (savedInstanceState != null) return;
                     Game_First_level firstLevel = new Game_First_level();
                     fragmentTransaction.replace(R.id.fragment_container, firstLevel);
+                    fragmentTransaction.commit();
+                    startTimer();
+                }
+                break;
+            case 2:
+                if (findViewById(R.id.fragment_container) != null) {
+                    Game_Second_level secondLevel = new Game_Second_level();
+                    fragmentTransaction.replace(R.id.fragment_container, secondLevel);
+                    fragmentTransaction.commit();
+                    startTimer();
+                }
+                break;
+            case 3:
+                if (findViewById(R.id.fragment_container) != null) {
+                    Game_Third_level thirdLevel = new Game_Third_level();
+                    fragmentTransaction.replace(R.id.fragment_container, thirdLevel);
+                    fragmentTransaction.commit();
+                    startTimer();
+                }
+                break;
+            case 4:
+                if (findViewById(R.id.fragment_container) != null) {
+                    Game_Fourth_level fourthlevel = new Game_Fourth_level();
+                    fragmentTransaction.replace(R.id.fragment_container, fourthlevel);
                     fragmentTransaction.commit();
                     startTimer();
                 }
@@ -156,6 +194,24 @@ public class GameActivity extends AppCompatActivity implements Game_First_level.
         removeExistingFragment(); //stop music and remove fragment
         showScore(); //calc score and open new fragment with score
         stopTimer();
+    }
+
+    /**
+     * Called when pressing Ok in the Score Menu
+     * @param value passes true when done to know if to load next level or reset
+     */
+    @Override
+    public void onDataPass2(boolean value) {
+        if (isContinueLevels){
+            if (currentLevel < LEVEL_NUMBER ){
+                currentLevel++;
+                initLevel(currentLevel);
+            }else // initalize last level
+                initLevel(currentLevel);
+        }
+        else{
+            removeExistingFragment();
+        }
     }
 
     @Override

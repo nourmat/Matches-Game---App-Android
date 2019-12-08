@@ -1,20 +1,26 @@
-package com.example.matches;
+package com.example.matches.Levels;
 
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+
+import com.example.matches.Objects.Card;
+import com.example.matches.Objects.CardData;
+import com.example.matches.Objects.OnDataPass;
+import com.example.matches.R;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game_First_level extends Fragment {
+public class Game_Second_level extends Fragment {
 
-    private static final int NUMBER_OF_CARDS = 8; //No of cards in this level
+    private static final int NUMBER_OF_CARDS = 12; //No of cards in this level
 
-    private Card card1,card2,card3,card4,card5,card6,card7,card8; //used to be binded with the frontend
+    private Card card1,card2,card3,card4,card5,card6,card7,card8,card9,card10,card11,card12; //used to be binded with the frontend
     public Card selected1, selected2; //used to store last pressed Cards to check
     private int shownCardCount = 0; //used to track which state are you in
     private int countDisappearedCards = 0; //used to know if the game is finished
@@ -28,6 +34,10 @@ public class Game_First_level extends Fragment {
         card6 = view.findViewById(R.id.card6);
         card7 = view.findViewById(R.id.card7);
         card8 = view.findViewById(R.id.card8);
+        card9 = view.findViewById(R.id.card9);
+        card10 = view.findViewById(R.id.card10);
+        card11 = view.findViewById(R.id.card11);
+        card12 = view.findViewById(R.id.card12);
 
         View.OnClickListener listener = getListener();
         card1.setOnClickListener(listener);
@@ -38,6 +48,10 @@ public class Game_First_level extends Fragment {
         card6.setOnClickListener(listener);
         card7.setOnClickListener(listener);
         card8.setOnClickListener(listener);
+        card9.setOnClickListener(listener);
+        card10.setOnClickListener(listener);
+        card11.setOnClickListener(listener);
+        card12.setOnClickListener(listener);
     }
 
     private void initCards(){
@@ -64,14 +78,18 @@ public class Game_First_level extends Fragment {
 
     //TODO add sounds
     private void addData(ArrayList<CardData> CardDataArrayList){
-        CardDataArrayList.add(new CardData(R.drawable.hippo, R.raw.lion));
-        CardDataArrayList.add(new CardData(R.drawable.hippo, R.raw.lion));
+        CardDataArrayList.add(new CardData(R.drawable.hippo, R.raw.hippo));
+        CardDataArrayList.add(new CardData(R.drawable.hippo, R.raw.hippo));
         CardDataArrayList.add(new CardData(R.drawable.lion, R.raw.lion));
         CardDataArrayList.add(new CardData(R.drawable.lion, R.raw.lion));
         CardDataArrayList.add(new CardData(R.drawable.monkey, R.raw.monkey));
         CardDataArrayList.add(new CardData(R.drawable.monkey, R.raw.monkey));
-        CardDataArrayList.add(new CardData(R.drawable.wolf, R.raw.lion));
-        CardDataArrayList.add(new CardData(R.drawable.wolf, R.raw.lion));
+        CardDataArrayList.add(new CardData(R.drawable.pig, R.raw.pig));
+        CardDataArrayList.add(new CardData(R.drawable.pig, R.raw.pig));
+        CardDataArrayList.add(new CardData(R.drawable.hourse, R.raw.horse));
+        CardDataArrayList.add(new CardData(R.drawable.hourse, R.raw.horse));
+        CardDataArrayList.add(new CardData(R.drawable.chicken, R.raw.chicken));
+        CardDataArrayList.add(new CardData(R.drawable.chicken, R.raw.chicken));
     }
 
     private void addCards(ArrayList<Card> cardArrayList){
@@ -83,6 +101,10 @@ public class Game_First_level extends Fragment {
         cardArrayList.add(card6);
         cardArrayList.add(card7);
         cardArrayList.add(card8);
+        cardArrayList.add(card9);
+        cardArrayList.add(card10);
+        cardArrayList.add(card11);
+        cardArrayList.add(card12);
     }
 
     private View.OnClickListener getListener(){
@@ -138,7 +160,7 @@ public class Game_First_level extends Fragment {
 
     /**---------------------------Fragment Settings-----------------------------------**/
 
-    public Game_First_level() {
+    public Game_Second_level() {
         // Required empty public constructor
     }
 
@@ -146,7 +168,7 @@ public class Game_First_level extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_game__first_level, container, false);
+        View view = inflater.inflate(R.layout.fragment_game__second_level, container, false);
 
         inti(view);
         initCards();

@@ -1,4 +1,4 @@
-package com.example.matches;
+package com.example.matches.Objects;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatImageButton;
 
+import com.example.matches.R;
+
 public class Card extends AppCompatImageButton{
 
     private static final int backCard = R.drawable.backcard;
     public static final int DELAYTIME = 500;
-    static MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
     private Handler handler;
     private Runnable runnable;
     private int sound;
